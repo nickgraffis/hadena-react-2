@@ -6,6 +6,8 @@ import { Link, useHistory } from 'react-navi';
 import { Footer } from '../Components/Footer';
 import { Navbar } from '../Components/Navbar';
 import { Hadena } from '../Icons/Hadena';
+import { hexToRGB } from 'hadenajs';
+import { imagine } from '../utils/imagesearch';
 
 type Props = {
   query: string
@@ -19,7 +21,35 @@ const masonry = {
 };
 
 const getColors = async (query: string) => {
-  let colors = await fetch(`/.netlify/functions/search?q=${query}&pp=24`).then(res => res.json()).catch(err => err);
+  let now = Date.now();
+  console.log('Search Fetch @ ', now);
+  let data = await fetch(`/api/search?q=${query}&pp=24`).then(res => res.json()).catch(err => err);
+  console.log('Done @ ', Date.now() - now);
+  let pixelData = [];
+  for (let i = 0; i < data.length; i++) {
+    let pixels = await imagine(data[i].thumb);
+    pixelData.push(pixels);
+  }
+  let primaryColors = await fetch('/api/palette', {
+    method: 'POST',
+    body: JSON.stringify({
+      pixels: pixelData,
+      k: 1
+    })
+  }).then(res => res.json());
+
+  let colors: any[] = [];
+  data.forEach((d: any, i: number) => {
+    colors.push({
+      displayColor: primaryColors.colors[i][0],
+      image: data[i].image,
+      palette: [],
+      link: data[i].link,
+      blur: data[i].blur,
+      thumb: data[i].thumb
+    });
+  });
+  console.log('PRIMARY COLORS', colors);
   return colors;
 };
 
@@ -48,6 +78,8 @@ export const Search: FC<Props> = ({ query }: Props) => {
   const fetchColors = (query: string): void => {
     setError(false);
     setLoading(true);
+    let now = Date.now();
+    console.log('Running first query at ', now);
     getColors(query).then(res => {
       if(!Object.keys(res).length) {
         setStatus(prev => [...prev, 'Got an empty object ' + res.toString()]);
@@ -62,10 +94,10 @@ export const Search: FC<Props> = ({ query }: Props) => {
           return;
         }
       } else {
-        setColors(res.colors);
+        setColors(res);
         setLoading(false);
-        console.log(res);
-        setStatus(prev => [...prev, `Found ${res.colors.length} colors/images!`]);
+        setStatus(prev => [...prev, `Found ${res.length} colors/images!`]);
+        console.log('Finished in ', Date.now() - now);
       }
     }).catch(err => setStatus(prev => [...prev, 'caught an error' + err.toString()]));
   }; 
@@ -134,6 +166,8 @@ export const Search: FC<Props> = ({ query }: Props) => {
               link={d.link}
               setStatus={setStatus}
               units={units}
+              blur={d.blur}
+              thumb={d.thumb}
             />;
           }) }</div>: <div className="flex-grow flex items-center justify-center px-16 flex-col space-y-12">
           <Hadena className="h-[255px] w-[255px]" />

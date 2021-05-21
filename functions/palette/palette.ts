@@ -1,35 +1,27 @@
 // Docs on event and context https://www.netlify.com/docs/functions/#the-handler-method
 import { Handler } from '@netlify/functions';
-import {extractPixelData, pixelsToColors } from 'hadenajs';
-import { createCanvas, loadImage } from 'canvas';
+import { pixelsToColors } from 'hadenajs';
 
 const handler: Handler = async (event) => {
   try {
-    const imagine = (photo: string) => {
+    const imagine = (pixels: any[], k: number) => {
       return new Promise((resolve) => {
-        let canvas = createCanvas(200, 200);
-        let context = canvas.getContext('2d');
-        loadImage(photo).then((image) => {
-          let aspectRatio = image.height / image.width;
-          canvas.width = 100;
-          canvas.height = aspectRatio * canvas.width;
-          if (context) {
-            context.drawImage(image, 0, 0, canvas.width, canvas.height);
-          }
-        
-          let pixels = extractPixelData(canvas);
-          let mainColor = pixelsToColors(pixels, 6);
-          resolve(mainColor);
-        });
+        let mainColor = pixelsToColors(pixels, k);
+        resolve(mainColor);
       });
     };
       
-    const eq = event.queryStringParameters;
-    let color;
-    if (eq?.photo) color = await imagine(eq.photo); 
+    const body = event.body ? JSON.parse(event.body) : null;
+    let colors = [];
+    let now = Date.now();
+    for (let i = 0; i < body.pixels.length; i++) {
+      let color = await imagine(body.pixels[i], body.k); 
+      colors.push(color);
+    }
+    console.log('Took ', Date.now() - now);
     return {
       statusCode: 200,
-      body: JSON.stringify({ color }),
+      body: JSON.stringify({ colors }),
       // // more keys you can return:
       // headers: { "headerName": "headerValue", ... },
       // isBase64Encoded: true,

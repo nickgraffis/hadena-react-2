@@ -1,14 +1,7 @@
-import React, { FC, Suspense, useContext, useEffect, useRef, useState } from 'react';
-import { FlyingBoxes } from './Art/FlyingBoxes';
-import { Hadena } from './Icons/Hadena';
-import { search, RGB, UnSplash, UnSplashData, imagine } from './utils/imagesearch';
-import { AnimatedInput } from './Components/AnimatedInput';
-import { words } from './data/colors';
-import { useKeypress } from './hooks/useKeyPress';
-import { Router, useLoadingRoute, View } from 'react-navi';
+import React, { FC, Suspense } from 'react';
+import { Router, View } from 'react-navi';
 import { routes } from './routes';
 import HelmetProvider from 'react-navi-helmet-async';
-import BusyIndicator from 'react-busy-indicator';
 
 type Props = { }
 

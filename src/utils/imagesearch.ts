@@ -1,4 +1,4 @@
-import hadena from 'hadenajs';
+import { extractPixelData } from 'hadenajs';
 
 export type UnSplash = {
   urls: {
@@ -23,43 +23,30 @@ export type RGB = {
   p: number
 }
 
-export const search = (query: string, page?: number, pp?: number): Promise<UnSplashData> => {
-  return new Promise(async (resolve) => {
-    console.log('fetching');
-    let json = await fetch(
-      '/api/search?q=' + query + 
-      (page ? `&page=${page}` : '') +
-      (pp ? `&pp=${pp}` : '')
-    );
-    console.log('returing to json');
-    let data: UnSplashData = await json.json();
-    resolve(data);
-  });
-};
-
 export const imagine = (photo: string): Promise<RGB> => {
   return new Promise((resolve) => {
     let canvas = document.createElement('canvas');
     let context = canvas.getContext('2d');
   
-    let image = new Image();
+    let domImage = new Image();
     let googleProxyURL =
-      'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=2592000&url=';
-    image.crossOrigin = 'Anonymous';
-    image.src = googleProxyURL + encodeURIComponent(photo);
-    image.onload = () => {
-      let aspectRatio = image.height / image.width;
+    'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=2592000&url=';
+    domImage.crossOrigin = 'Anonymous';
+    domImage.src = googleProxyURL + encodeURIComponent(photo);
+    let now = Date.now();
+    console.log('loading image @ ', now);
+    domImage.onload = () => {
+      let aspectRatio = domImage.height / domImage.width;
       canvas.width = 100;
       canvas.height = aspectRatio * canvas.width;
       if (context) {
-        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        context.drawImage(domImage, 0, 0, canvas.width, canvas.height);
       }
-  
-      let pixels = hadena.extractPixelData(canvas);
-      let mainColor = hadena.pixelsToColors(pixels, 1);
-      resolve(mainColor[0]);
+      let pixels = extractPixelData(canvas);
+      resolve(pixels);
+      console.log('done @ ', Date.now() - now);
     };
-    image.onerror = (err) => {
+    domImage.onerror = (err) => {
       console.log(err);
     };
   });
