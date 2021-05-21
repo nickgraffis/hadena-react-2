@@ -19,7 +19,7 @@ const masonry = {
 };
 
 const getColors = async (query: string) => {
-  let colors = await fetch(`/api/search?q=${query}&pp=24`).then(res => res.json()).catch(err => err);
+  let colors = await fetch(`/.netlify/functions/search?q=${query}&pp=24`).then(res => res.json()).catch(err => err);
   return colors;
 };
 

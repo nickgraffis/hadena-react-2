@@ -14,7 +14,7 @@ type Props = {
 }
 
 const getPalette = async (photo: string) => {
-  let colors = await fetch(`/api/palette?photo=${photo}`).then(res => res.json());
+  let colors = await fetch(`.netlify/functions/palette?photo=${photo}`).then(res => res.json());
   return colors;
 };
 
