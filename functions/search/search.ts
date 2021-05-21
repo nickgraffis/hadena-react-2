@@ -4,33 +4,34 @@ import axios from 'axios';
 import { extractPixelData, pixelsToColors } from 'hadenajs';
 import { createCanvas, loadImage } from 'canvas';
 
-const imagine = (photo: string, full: string, link: string) => {
-  return new Promise((resolve) => {
-    let canvas = createCanvas(200, 200);
-    let context = canvas.getContext('2d');
-    loadImage(photo).then((image) => {
-      let aspectRatio = image.height / image.width;
-      canvas.width = 100;
-      canvas.height = aspectRatio * canvas.width;
-      if (context) {
-        context.drawImage(image, 0, 0, canvas.width, canvas.height);
-      }
-  
-      let pixels = extractPixelData(canvas);
-      let mainColor = pixelsToColors(pixels, 1);
-      resolve({
-        displayColor: mainColor[0],
-        image: full,
-        palette: [],
-        link
-      });
-    });
-  });
-};
-
-const url = 'https://api.unsplash.com/search/photos?client_id=';
 const handler: Handler = async (event) => {
   try {
+
+    const imagine = (photo: string, full: string, link: string) => {
+      return new Promise((resolve) => {
+        let canvas = createCanvas(200, 200);
+        let context = canvas.getContext('2d');
+        loadImage(photo).then((image) => {
+          let aspectRatio = image.height / image.width;
+          canvas.width = 100;
+          canvas.height = aspectRatio * canvas.width;
+          if (context) {
+            context.drawImage(image, 0, 0, canvas.width, canvas.height);
+          }
+  
+          let pixels = extractPixelData(canvas);
+          let mainColor = pixelsToColors(pixels, 1);
+          resolve({
+            displayColor: mainColor[0],
+            image: full,
+            palette: [],
+            link
+          });
+        });
+      });
+    };
+
+    const url = 'https://api.unsplash.com/search/photos?client_id=';
     const eq = event.queryStringParameters;
     const data = await axios.get(
       url + process.env.API_KEY + 
