@@ -11,5 +11,5 @@ export const words: IntroWords = {
   'lavender': ['#BEA1E5', '#A188D9', '#D6BD1F', '#C8ADFC', '#F99C81', '#90B90F', '#C1DBEE', '#C1DBEE'],
   'maine': ['#FCF3E9', '#FABB84', '#CDB033', '#F06243', '#9A7E52', '#B2C1C8', '#EC4143', '#DE6F06'],
   'pride': ['#FF0000', '#FF4D00', '#FF9900', '#FFE500', '#CCFF00', '#80FF00', '#33FF00', '#00FFFF'],
-  'humback whale': ['#4B7CBC', '#3A7C9F', '#4063BA', '#047CC1', '#78A3C7', '#0474BC', '#044E54', '#BFF0FB']
+  'humpback whale': ['#4B7CBC', '#3A7C9F', '#4063BA', '#047CC1', '#78A3C7', '#0474BC', '#044E54', '#BFF0FB']
 };

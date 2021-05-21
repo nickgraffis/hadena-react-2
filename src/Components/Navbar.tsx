@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
 import { Link } from 'react-navi';
 import { Hadena } from '../Icons/Hadena';
+import { Unit } from '../hadena';
 
 type Props = {
     input: string,
@@ -8,7 +9,7 @@ type Props = {
     units: string,
     handleChangeInput: (event: React.ChangeEvent<HTMLInputElement>) => void,
     handleInput: (event: React.KeyboardEvent) => void,
-    setUnits: (string: string) => void
+    setUnits: (unit: Unit) => void
 }
 
 export const Navbar: FC<Props> = ({ input, inputRef, units, handleChangeInput, handleInput, setUnits }: Props) => {

@@ -1,3 +1,4 @@
+import fakeProcess from '../fakeenv';
 import { words } from '../data/colors';
 import { Hadena } from '../Icons/Hadena';
 import { useNavigation } from 'react-navi';
@@ -34,7 +35,7 @@ export const Home: FC<Props> = () => {
       <div className="flex flex-col space-y-12 mx-auto items-center max-w-2xl h-screen px-8 md:px-0 lg:px-0 justify-center">
         <p className={`z-20 flex items-center w-full justify-center space-x-6 text-[50px] font-black transform transition-all duration-300 ${blowUp ? '-translate-y-96' : '-translate-y-0'}`}>
           <Hadena className="h-[80px] w-[80px]" /> 
-          <span>はでな HADENA</span>
+          <span>{fakeProcess.env.TITLE}</span>
         </p>
         <div className={'z-20 relative flex w-full items-center transform transition-all duration-300'}>
           <div className="absolute left-4">

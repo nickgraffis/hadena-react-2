@@ -1,13 +1,12 @@
 // Docs on event and context https://www.netlify.com/docs/functions/#the-handler-method
 import { Handler } from '@netlify/functions';
 import axios from 'axios';
-import { linkSync } from 'fs';
 
 const handler: Handler = async (event) => {
   try {
     const url = 'https://api.unsplash.com/search/photos?client_id=';
     const eq = event.queryStringParameters;
-    const data = await axios.get(
+    const images = await axios.get(
       url + process.env.API_KEY + 
       `&page=${eq?.page || 1}&per_page=${eq?.pp || 10}` + 
       `&query=${eq?.q}`
@@ -23,7 +22,11 @@ const handler: Handler = async (event) => {
     }));
     return {
       statusCode: 200,
-      body: JSON.stringify(data),
+      body: JSON.stringify({ 
+        data: {
+          images
+        } 
+      }),
     };
   } catch (error) {
     console.log(error);

@@ -21,7 +21,11 @@ const handler: Handler = async (event) => {
     console.log('Took ', Date.now() - now);
     return {
       statusCode: 200,
-      body: JSON.stringify({ colors }),
+      body: JSON.stringify({ 
+        data: {
+          colors 
+        }
+      }),
       // // more keys you can return:
       // headers: { "headerName": "headerValue", ... },
       // isBase64Encoded: true,

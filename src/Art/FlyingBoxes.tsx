@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { FC } from 'react';
-import { RGB } from '../utils/imagesearch';
-import hadena from 'hadenajs';
+import React, { useEffect, useState, FC } from 'react';
 import { rand } from '../utils/math';
 
 type Props = {
