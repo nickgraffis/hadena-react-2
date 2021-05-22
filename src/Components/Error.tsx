@@ -10,7 +10,7 @@ type Props = {
     query: string
 }
 
-export const ErrorModal: FC<Props> = ({ 
+const ErrorModal: FC<Props> = ({ 
   error,
   setError,
   errorCount, 
@@ -44,3 +44,5 @@ export const ErrorModal: FC<Props> = ({
     </div>
   );
 };
+
+export default ErrorModal;

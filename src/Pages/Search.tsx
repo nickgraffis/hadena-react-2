@@ -1,8 +1,4 @@
-import React, { FC, useRef, useState, useEffect } from 'react';
-import { ColorCard } from '../Components/ColorCard';
-import { Footer } from '../Components/Footer';
-import { Navbar } from '../Components/Navbar';
-import { ErrorModal } from '../Components/Error';
+import React, { FC, useRef, useState, useEffect, Suspense, lazy } from 'react';
 import { fetchImages } from '../utils/fetchImages';
 import { useHistory } from 'react-navi';
 import { useKeypress } from '../hooks/useKeyPress';
@@ -10,6 +6,10 @@ import { Image, Unit } from '../hadena';
 import { LoadingIndicator } from '../Components/LoadingIndicator';
 import { EmptyState } from '../Components/EmptyState';
 import { MobileSearch } from '../Components/MobileSearch';
+const ColorCard = lazy(() => import('../Components/ColorCard'));
+const ErrorModal = lazy(() => import('../Components/Error'));
+const Navbar = lazy(() => import('../Components/Navbar'));
+const Footer = lazy(() => import('../Components/Footer'));
 
 type Props = {
   query: string
@@ -22,7 +22,7 @@ const masonry = {
   gridAutoRows: '200px'
 };
 
-export const Search: FC<Props> = ({ query }: Props) => {
+const Search: FC<Props> = ({ query }: Props) => {
   const [error, setError] = useState<boolean>(false);
   const [errorCount, setErrorCount] = useState<number>(0);
   const [isLoading, setLoading] = useState<boolean>(true);
@@ -76,39 +76,45 @@ export const Search: FC<Props> = ({ query }: Props) => {
   }, []);
 
   return (<>
-    <div 
-      className={`h-screen w-screen fixed flex items-center justify-center z-50 
+    <Suspense fallback={null}>
+      <div 
+        className={`h-screen w-screen fixed flex items-center justify-center z-50 
       ${error ? 'scale-100 opacity-100' : 'scale-50 opacity-0 hidden'}`}
-    >
-      <ErrorModal 
-        error={error}
-        setError={setError}
-        errorCount={errorCount}
-        setErrorCount={setErrorCount}
-        query={query}
-        getImages={getImages}
-      />
-    </div>
+      >
+        <ErrorModal 
+          error={error}
+          setError={setError}
+          errorCount={errorCount}
+          setErrorCount={setErrorCount}
+          query={query}
+          getImages={getImages}
+        />
+      </div>
+    </Suspense>
     <LoadingIndicator loading={isLoading} />
     <div className="space-y-12 items-center h-full flex flex-col min-h-screen">
-      <Navbar
-        input={input}
-        inputRef={inputRef}
-        units={units}
-        setUnits={setUnits}
-        handleChangeInput={handleChangeInput}
-        handleInput={handleInput} 
-      />
-      { images.length ? 
-        <div className="w-full px-16 flex-grow" style={masonry}>
-          {images.map((image: Image, i: number) => {
-            return <ColorCard 
-              key={i}
-              image={image}
-              units={units}
-            />;
-          }) }</div>: <EmptyState />
-      }
+      <Suspense fallback={null}>
+        <Navbar
+          input={input}
+          inputRef={inputRef}
+          units={units}
+          setUnits={setUnits}
+          handleChangeInput={handleChangeInput}
+          handleInput={handleInput} 
+        />
+      </Suspense>
+      <Suspense fallback={<p>Loading...</p>}>
+        { images.length ? 
+          <div className="w-full px-16 flex-grow" style={masonry}>
+            {images.map((image: Image, i: number) => {
+              return <ColorCard 
+                key={i}
+                image={image}
+                units={units}
+              />;
+            }) }</div>: <EmptyState />
+        }
+      </Suspense>
       <div className="z-20 py-12 px-12 flex justify-between items-center w-full text-sm font-semibold">
         <Footer />
       </div>
@@ -121,3 +127,5 @@ export const Search: FC<Props> = ({ query }: Props) => {
   </>
   );
 };
+
+export default Search;

@@ -3,7 +3,7 @@ import { FC } from 'react';
 
 type Props = { }
 
-export const Footer: FC<Props> = () => {
+const Footer: FC<Props> = () => {
   return (
     <>
       <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer" className="flex space-x-4 text-blueGray-600 hover:text-blueGray-800 cursor-pointer transition-colors duration-300 ease-in-out">
@@ -27,3 +27,5 @@ export const Footer: FC<Props> = () => {
     </>
   );
 };
+
+export default Footer;

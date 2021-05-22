@@ -12,7 +12,7 @@ type Props = {
     setUnits: (unit: Unit) => void
 }
 
-export const Navbar: FC<Props> = ({ input, inputRef, units, handleChangeInput, handleInput, setUnits }: Props) => {
+const Navbar: FC<Props> = ({ input, inputRef, units, handleChangeInput, handleInput, setUnits }: Props) => {
   const [showTools, setShowTools] = useState<boolean>(false);
 
   return (
@@ -103,3 +103,5 @@ export const Navbar: FC<Props> = ({ input, inputRef, units, handleChangeInput, h
     </div>
   );
 };
+
+export default Navbar;

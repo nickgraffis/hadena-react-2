@@ -1,8 +1,10 @@
 import { mount, route } from 'navi';
-import React from 'react';
-import { Home } from '../Pages/Home';
-import { Search } from '../Pages/Search';
+import React, { lazy } from 'react';
+import { HomeLoading } from '../Components/HomeLoading';
 import fakeProcess from '../fakeenv';
+
+const Search = lazy(() => import('../Pages/Search'));
+const Home = lazy(() => import('../Pages/Home'));
 
 export const routes = mount({
   /**
@@ -11,6 +13,9 @@ export const routes = mount({
   '/': route({
     title: fakeProcess.env.TITLE,
     view: <Home />,
+  }),
+  '/loading': route({
+    view: <HomeLoading />
   }),
   /**
    * Search Page Component

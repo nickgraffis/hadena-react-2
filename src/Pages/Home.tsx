@@ -3,13 +3,13 @@ import { words } from '../data/colors';
 import { Hadena } from '../Icons/Hadena';
 import { useNavigation } from 'react-navi';
 import React, { useState, FC } from 'react';
-import { Footer } from '../Components/Footer';
+import Footer from '../Components/Footer';
 import { FlyingBoxes } from '../Art/FlyingBoxes';
 import { AnimatedInput } from '../Components/AnimatedInput';
 
 type Props = { }
 
-export const Home: FC<Props> = () => {
+const Home: FC<Props> = () => {
   const [demoColors, setDemoColors] = useState<any[]>(new Array(8).fill('#808080'));
   const [input, setInput] = useState<string>('');
   /** TODO: Animated the FlyingBoxes and AnimatedInput on Enter */
@@ -53,3 +53,5 @@ export const Home: FC<Props> = () => {
     </>
   );
 };
+
+export default Home;

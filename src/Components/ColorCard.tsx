@@ -14,7 +14,7 @@ type Props = {
   units: Unit
 }
 
-export const ColorCard: FC<Props> = ({ image, units }: Props) => {
+const ColorCard: FC<Props> = ({ image, units }: Props) => {
   const [isLoading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
   const [errorCount, setErrorCount] = useState<number>(0);
@@ -114,3 +114,5 @@ export const ColorCard: FC<Props> = ({ image, units }: Props) => {
     </div>
   );
 };
+
+export default ColorCard;
