@@ -105,7 +105,7 @@ const Search: FC<Props> = ({ query }: Props) => {
       </Suspense>
       <Suspense fallback={<p>Loading...</p>}>
         { images.length ? 
-          <div className="w-full px-16 flex-grow" style={masonry}>
+          <div className="w-full lg:px-16 px-4 flex-grow" style={masonry}>
             {images.map((image: Image, i: number) => {
               return <ColorCard 
                 key={i}
@@ -115,7 +115,7 @@ const Search: FC<Props> = ({ query }: Props) => {
             }) }</div>: <EmptyState />
         }
       </Suspense>
-      <div className="z-20 py-12 px-12 flex justify-between items-center w-full text-sm font-semibold">
+      <div className="z-20 lg:py-12 py-4 lg:px-12 px-4 flex justify-between items-center w-full text-sm font-semibold">
         <Footer />
       </div>
     </div>

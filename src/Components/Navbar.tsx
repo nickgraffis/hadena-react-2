@@ -16,10 +16,10 @@ const Navbar: FC<Props> = ({ input, inputRef, units, handleChangeInput, handleIn
   const [showTools, setShowTools] = useState<boolean>(false);
 
   return (
-    <div className="h-16 w-full flex items-center justify-between px-16 pt-6">
+    <div className="h-16 w-full flex items-center justify-between lg:px-12 px-4 pt-6">
       <Link href="/" className="flex items-center space-x-6 font-semibold text-base flex-shrink-0">
         <Hadena />
-        <span>派手な HADENA</span>
+        <span className="hidden md:inline-flex">派手な HADENA</span>
       </Link>
       <div className="flex-grow">
         <div className={'z-20 relative items-center px-16 hidden lg:flex'}>
