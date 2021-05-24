@@ -18,7 +18,8 @@ export const MobileSearch: FC<Props> = ({ input, handleInput, handleChangeInput 
         onChange={handleChangeInput} 
         onKeyDown={handleInput} 
         className={`apperance-none pl-10 bg-gray-100 dark:bg-blueGray-800
-        px-4 py-2 text-md w-full focus:outline-none ring-2 
+        px-4 py-2 text-md w-full focus:outline-none ring-2 rounded-none
+        border-2 border-blueGray-800
         ring-blueGray-800 dark:ring-gray-100`} 
       />
     </div>

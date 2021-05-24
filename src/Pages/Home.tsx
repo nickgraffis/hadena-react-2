@@ -43,7 +43,7 @@ const Home: FC<Props> = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </div>
-          <AnimatedInput changeColor={changeColors} onKeyUp={handleInput} onChange={handleChangeInput} value={input} className="apperance-none pl-[45px] lg:pl-[85px] bg-gray-100 dark:bg-blueGray-800 px-4 lg:text-[40px] text-[20px] rounded-lg w-full focus:outline-none lg:ring-4 ring-2 ring-blueGray-800 dark:ring-gray-100" />
+          <AnimatedInput changeColor={changeColors} onKeyUp={handleInput} onChange={handleChangeInput} value={input} className="apperance-none pl-[45px] lg:pl-[85px] bg-gray-100 dark:bg-blueGray-800 px-4 lg:text-[40px] text-[20px] rounded-lg w-full focus:outline-none lg:ring-4 ring-2 border-2 border-blueGray-800 ring-blueGray-800 dark:ring-gray-100" />
         </div>
         <div className="z-20 absolute bottom-4 flex justify-between lg:px-12 px-4 w-full text-sm font-semibold">
           <Footer />
